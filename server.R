@@ -31,7 +31,7 @@ function(input, output) {
   })
   output$getourcode <- renderMenu({
     menuItem("Download Our Code", icon = icon("download"), 
-             href = "")
+             href = "https://github.com/elizabit/RShinyDash490.git")
   })
   output$plot1 <- renderPlot({
     varibchoice <- input$varib
