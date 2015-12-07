@@ -18,7 +18,7 @@ dashboardPage(
   dashboardHeader(
     title = "World Bank Analysis-Shiny Dashboard", 
     titleWidth = 450
-  ),#dashboardHeader closing
+  ),
   dashboardSidebar(
     sidebarMenu(
       menuItem("Dashboard", tabName = "dashboard", icon = icon("home")),
@@ -28,14 +28,14 @@ dashboardPage(
       sidebarMenuOutput("tutorial"),
       sidebarMenuOutput("getourcode")
     )
-  ),#dashboardSidebar closing
+  ),
   dashboardBody(
     tabItems(
       tabItem(tabName = "dashboard",
               fluidRow(
                 box(
                   title = "World Map", width = 12, status = "warning", solidHeader = T, 
-                  plotOutput("plot1", height = 300)
+                  plotOutput("plot1", height = 400)
                 ),
                 box(
                   width = 6,height = 200, 
@@ -69,7 +69,7 @@ dashboardPage(
                       )
                 ),
                 box(
-                  width = 4, height = 150, status = "warning", solidHeader = T
+                  width = 4, height = 150, background = "orange", solidHeader = T
                 ),
                 box(
                   width = 4, height = 150, status = "warning", solidHeader = T,
@@ -77,15 +77,15 @@ dashboardPage(
                   h4("by Elizabeth Fink and Carlton Rollins")
                 )
                 
-              )#fluid row
-      ), #DASHBOARD TABitem closing
+              )
+      ),
       tabItem(tabName = "graphtab", 
               fluidRow(
                 box(width = 12, background = "navy",
                   h2("Graphs")
                 ),
                 tabBox(
-                  title = "Life Expectancy Graphs", width = 12, 
+                  title = "Life Expectancy Graphs", width = 12, height = 600,
                   id = "tabset1", 
                   tabPanel("Years", "Life Expectancy from 1994-2014 by Region and Country", status = "info",
                            plotOutput("plot2")),
@@ -99,16 +99,44 @@ dashboardPage(
                            plotOutput("plot6"))
                 ),
                 box(
-                  width = 8, title = "Graph Dynamic",
-                  plotOutput("plot7")
-                ) 
+                  width = 2, background = "navy", height = 100
+                ),
+                box(
+                  width = 2, status = "primary", solidHeader = T, height = 100
+                ),
+                box(
+                  width = 2, background = "navy", height = 100
+                ),
+                box(
+                  width = 2, status = "primary", solidHeader = T, height = 100
+                ),
+                box(
+                  width = 2, background = "navy", height = 100
+                ),
+                box(
+                  width = 2, status = "primary", solidHeader = T, height = 100
+                )
               )
-      ),#graphtab tabitem closing
+      ),
       tabItem(tabName = "tablestab",
-              h2("World Bank Data Table"),
-              box(
-                width = 12, background = "light-blue",
-                tableOutput("table1")
+              box(width = 12, background = "olive",
+                  h2("World Bank Data Table")),
+              box(width = 12, height = 3, background = "green"),
+              tabBox(
+                title = "Data Tables", width = 12, 
+                id = "tabset1", 
+                tabPanel("1994-1997", 
+                         tableOutput("table1")),
+                tabPanel("1998-2001", 
+                         tableOutput("table2")), 
+                tabPanel("2002-2005", 
+                         tableOutput("table3")),
+                tabPanel("2006-2009", 
+                         tableOutput("table4")),
+                tabPanel("2010-2013", 
+                         tableOutput("table5")), 
+                tabPanel("2014", 
+                         tableOutput("table6"))
               ),
               box(
                 width = 6, status = "primary",
@@ -120,37 +148,60 @@ dashboardPage(
                 strong(h4("Countries:")),
                 h4("Afghanistan, Argentina, Australia, Belgium, Brazil, Belize, Canada, Chile, Cameroon, China, Colombia, Germany, Denmark, Egypt, Spain, Finland, France, United Kingdom, Greenland, Greece, Ireland, India, Iraq, Iran, Iceland, Italy, Japan, Kenya, Morocco, Mali, Mexico, Nigeria, New Zealand, Russian Federation, Saudi Arabia, Turkey, United States, Uruguay, South Africa")
               )
-      ),# tablestab tabitem closing
+      ),
       tabItem(tabName = "information",
               fluidRow(
                 box(
-                  h2("Check out our code!"), background = "maroon", width = 12
-                )
-              ),
-              h3("Getting the Data"),
-              h5("packages: WDI, Hmisc"),
-              p(code("library(WDI), library(Hmisc)")),
-              p(code("wb.data = WDI(country = c('AU',  'AF', 'BE', 'BZ', 'BR', 'CM', 'CA', 'CL', 'CN', 'CO', 'DK', 'EG', 'FI', 'FR', 'DE', 'GR', 'GL', 'IS', 'IN', 'IR', 'IQ', 'IE', 'IT', 'JP', 'KE', 'ML', 'MX', 'MA', 'NZ', 'NG', 'RU', 'SA', 'ZA', 'ES', 'TR', 'UY', 'US', 'GB', 'AR'), indicator = c('SP.DYN.LE00.IN','SH.IMM.MEAS', 'SH.IMM.IDPT'), start = 1994, end = 2014, extra = F)")),
-              h6("for ggplot2 graphs we used the argument extra = T, to include region and income variables in the data"),
-              p(code("names(wb.data) = c('remove', 'Country.Name', 'Year', 'Life.E', 'Imm.Meas', 'Imm.DPT')")),
-              p(code("wb.data = wb.data[ , 2:6]")),
-              h3("World Graph"),
-              h5("packages: sp, rworldmap"),
-              p(code("library(sp), library(rworldmap)")),
-              p(code("WBMAP = joinCountryData2Map(wb.data, joinCode = 'NAME', nameJoinColumn = 'Country.Name'")),
-              p(code("mapCountryData(WBMAP, nameColumnToPlot = 'Lit.E', catMethod = 'fixedwidth')")),
-              h3("ggplot2 Graphs"),
-              h5("packages: ggplot2"),
-              p(code("library(ggplot2)")),
-              p(code("code")),
-              h3("Shiny App Code"),
-              h4("This is the basic code needed to run a Shiny Dashboard"),
-              h5("User Interface (ui.R)"),
-              p(code("code")),
-              h5("Server (server.R)"),
-              p(code("code")),
-              p("You can check out our full code by clicking the Download Link!")
+                  h1("Check out our code!"), background = "maroon", width = 12, solidHeader = TRUE,
+                  p("For the full text, click the link in the sidebar to download our code at GitHub")
+                ),
+                box(
+                  width = 6, status = "danger", solidHeader = T, height = 550,
+                  h3("Getting the Data"),
+                  h5("packages: WDI, Hmisc"),
+                  p(code("library(WDI), library(Hmisc)")),
+                  p(code("wb.data = WDI(country = c('AU',  'AF', 'BE', 'BZ', 'BR', 'CM', 'CA', 'CL', 'CN', 'CO', 'DK', 'EG', 'FI', 'FR', 'DE', 'GR', 'GL', 'IS', 'IN', 'IR', 'IQ', 'IE', 'IT', 'JP', 'KE', 'ML', 'MX', 'MA', 'NZ', 'NG', 'RU', 'SA', 'ZA', 'ES', 'TR', 'UY', 'US', 'GB', 'AR'), indicator = c('SP.DYN.LE00.IN','SH.IMM.MEAS', 'SH.IMM.IDPT, 'SE.XPD.TOTL.GD.ZS', 'SE.ADT.LITR.ZS'), start = 1994, end = 2014, extra = F)")),
+                  h6("for ggplot2 graphs we used the argument extra = T, to include region and income variables in the data"),
+                  p(code("names(wb.data) = c('remove', 'Country.Name', 'Year', 'Life.E', 'Imm.Meas', 'Imm.DPT', 'Pub.ed', 'Lit.R')")),
+                  p(code("wb.data = wb.data[ , 2:8]"))
+                ),
+                box(
+                  width = 6, status = "danger", solidHeader = T, height = 550,
+                  h3("ggplot2 Graphs"),
+                  h5("packages: ggplot2"),
+                  p(code("library(ggplot2)")),
+                  p(code("gg_life.e <- ggplot(data = wb.data2, aes(x = Year, y = Life.E))")),
+                  p(code("gg_life.e + geom_point(aes(x = Year, y = Life.E, alpha = .3, color = Region)) + guides(size = F, alpha = F)")),
+                  p(code("+ xlab('Year') + ylab('Life Expectancy (years)') + ggtitle('Life Expectancy from 1994-2014 by Country')"))
+                ),
+                box(
+                  width = 5, status = "danger", solidHeader = T,
+                  h3("World Graph"),
+                  h5("packages: sp, rworldmap"),
+                  p(code("library(sp), library(rworldmap)")),
+                  p(code("WBMAP = joinCountryData2Map(wb.data, joinCode = 'NAME', nameJoinColumn = 'Country.Name'")),
+                  p(code("mapCountryData(WBMAP, nameColumnToPlot = 'Lit.E', catMethod = 'fixedwidth')"))
+                ), 
+                  box(
+                    width = 7, status = "danger", solidHeader = T,
+                    h3("Shiny App Code"),
+                    h4("This is the basic code needed to run a Shiny Dashboard"),
+                    h4("This code will run a blank dashboard app with nothing in it"),
+                    h5("User Interface (ui.R)"),
+                    p(code("dashboardPage(")),
+                    p(code("dashboardHeader(),")),
+                    p(code("dashboardSidebar(),")),
+                    p(code("dashboardBody())")),
+                    p(code(")")),
+                    h5("Server (server.R)"),
+                    p(code("function(input, output) { }")),
+                    p("You can check out our full code by clicking the Download Link!")
+                  )
+              )
+          )
       )
     )
-  ) #dashboardBody closing
-)
+  ) 
+
+
+
