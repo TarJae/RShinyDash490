@@ -14,8 +14,10 @@ library(RColorBrewer)
 wb.data = WDI( country = c('AU', 'AF', 'BE', 'BZ', 'BR', 'CM', 'CA', 'CL', 'CN', 'CO', 'DK', 'EG', 'FI', 'FR', 'DE', 'GR', 'GL', 'IS', 'IN', 'IR', 'IQ', 'IE', 'IT', 'JP', 'KE', 'ML', 'MX', 'MA', 'NZ', 'NG', 'RU', 'SA', 'ZA', 'ES', 'TR', 'UY', 'US', 'GB', 'AR'), indicator = c("SP.DYN.LE00.IN","SH.IMM.MEAS", "SH.IMM.IDPT", "SE.XPD.TOTL.GD.ZS", "SE.ADT.LITR.ZS"), start = 1994, end = 2014, extra = F)
 names(wb.data) = c("remove", "Country.Name", "Year","Life.E", "Imm.Meas", "Imm.DPT", "Pub.edu", "Lit.R")
 wb.data = wb.data[ , 2:8]
-
-
+wb.map = wb.data
+wb.map = wb.data[c(589, 213, 276, 486, 780, 801, 614, 91, 175, 196, 469, 574, 637, 721, 29, 407, 449, 533, 156, 492, 639, 702, 619, 661, 95, 221:227, 305:306, 599, 641:643, 725, 746:747, 285:286, 495:496, 454, 622, 748, 790, 182, 308, 581, 644, 749, 791, 812, 162, 309:310, 498, 603:604, 645:648, 666, 792, 163, 751:752, 793:794, 814:815, 97:104, 185, 206, 290, 311:312, 626:627, 710, 18, 165, 228, 459, 606, 753:755, 795:797, 816:817, 292, 313, 502, 649, 41, 293, 314, 419, 482, 545, 650, 734), ]
+head(wb.map)
+# row 589 morocco, 
 #data for ggplots
 wb.data2 = WDI( country = c('AU', 'AF', 'BE', 'BZ', 'BR', 'CM', 'CA', 'CL', 'CN', 'CO', 'DK', 'EG', 'FI', 'FR', 'DE', 'GR', 'GL', 'IS', 'IN', 'IR', 'IQ', 'IE', 'IT', 'JP', 'KE', 'ML', 'MX', 'MA', 'NZ', 'NG', 'RU', 'SA', 'ZA', 'ES', 'TR', 'UY', 'US', 'GB', 'AR'), indicator = c("SE.ADT.LITR.ZS", "SP.DYN.LE00.IN", "SE.XPD.TOTL.GD.ZS", "SH.IMM.MEAS", "SH.IMM.IDPT"), start = 1994, end = 2014, extra = T)
 wb.data2 = wb.data2[ , c(2:8, 10, 14)]
@@ -23,7 +25,7 @@ names(wb.data2) = c("Country.Name", "Year", "Lit.R", "Life.E", "Pub.edu", "Imm.M
 
 wb.data3 = wb.data
 wb.data3 = wb.data3[order(wb.data3$Year, decreasing = FALSE), ]
-
+head(wb.data3, 39)
 function(input, output) {
   set.seed(1234)
   output$tutorial <- renderMenu({
@@ -38,7 +40,7 @@ function(input, output) {
   })
   output$plot1 <- renderPlot({
     varibchoice <- input$varib
-    WBMAP = joinCountryData2Map(wb.data, joinCode = "NAME", nameJoinColumn = "Country.Name")
+    WBMAP = joinCountryData2Map(wb.map, joinCode = "NAME", nameJoinColumn = "Country.Name")
     mapCountryData(WBMAP, nameColumnToPlot = varibchoice, catMethod = "fixedWidth", colourPalette = input$palchoice)
   })
   output$plot2 <- renderPlot({
